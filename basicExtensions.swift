@@ -9,7 +9,7 @@ extension String {
     }
     
     var QRImage:UIImage?{
-        let data = String().dataUsingEncoding(NSASCIIStringEncoding)
+        let data = self.dataUsingEncoding(NSASCIIStringEncoding)
         
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
@@ -100,6 +100,21 @@ extension NSMutableDictionary {
 extension NSURL {
     func openURL(){
         UIApplication.sharedApplication().openURL(self)
+    }
+    var QRImage:UIImage?{
+        let data = self.dataRepresentation
+        
+        if let filter = CIFilter(name: "CIQRCodeGenerator") {
+            filter.setValue(data, forKey: "inputMessage")
+            let transform = CGAffineTransform(a: 0, b: 0, c: 0, d: 0, tx: 3, ty: 3)
+            
+            if let output = filter.outputImage?.imageByApplyingTransform(transform) {
+                var fl = saveFile("QR", ofType: "png")
+                return UIImage(CIImage: output)
+            }
+        }
+        
+        return nil
     }
 }
 
