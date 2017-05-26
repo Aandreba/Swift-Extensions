@@ -123,7 +123,7 @@ extension NSData {
 }
 
 extension UIImage {
-    var qrString: String {
+    var qrString: String? {
         var image = self.CIImage
         let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyLow])
         
