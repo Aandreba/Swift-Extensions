@@ -143,6 +143,13 @@ func presentXibViewController(actualVC:UIViewController, name:String, animation:
     actualVC.presentViewController(vc, animated: animation, completion: completion)
 }
 
+func errorAlert(vc:UIViewController!, error: NSError!, animated:Bool!, handler: ((UIAlertAction) -> Void)?){
+    let alert = UIAlertController(title: "\(error.code)", message: error.description, preferredStyle: .Alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: handler))
+    vc.presentViewController(alert, animated: animated, completion: nil)
+}
+
+
 extension UIImage{
     func getImageFromWeb(_urlString: String)->UIImage {
         let url = NSURL(string: _urlString)
