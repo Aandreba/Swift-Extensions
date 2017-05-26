@@ -16,7 +16,6 @@ extension String {
             let transform = CGAffineTransform(a: 0, b: 0, c: 0, d: 0, tx: 3, ty: 3)
             
             if let output = filter.outputImage?.imageByApplyingTransform(transform) {
-                var fl = saveFile("QR", ofType: "png")
                 return UIImage(CIImage: output)
             }
         }
@@ -109,7 +108,6 @@ extension NSURL {
             let transform = CGAffineTransform(a: 0, b: 0, c: 0, d: 0, tx: 3, ty: 3)
             
             if let output = filter.outputImage?.imageByApplyingTransform(transform) {
-                var fl = saveFile("QR", ofType: "png")
                 return UIImage(CIImage: output)
             }
         }
@@ -191,5 +189,4 @@ extension NSDate {
         let components = calendar.components([.Second], fromDate: self)
         return components.second
     }
-}
 }
