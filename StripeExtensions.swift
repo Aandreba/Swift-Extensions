@@ -3,14 +3,14 @@ import UIKit
 import Stripe
 
 extension STPCard{
-    func validate(completed: ()->())->Bool{
+    func validate(completed: ()->()?)->Bool{
         var error: NSError? = nil
         try? self.validateCardReturningError()
         //3
         if error != nil {
             return false
         } else {
-        completed()
+        completed()!
         return true
         }
 }
