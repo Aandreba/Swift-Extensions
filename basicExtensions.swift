@@ -144,7 +144,7 @@ func presentXibViewController(actualVC:UIViewController, name:String, animation:
 }
 
 func errorAlert(vc:UIViewController!, error: NSError!, animated:Bool!, handler: ((UIAlertAction) -> Void)?){
-    let alert = UIAlertController(title: "\(error.code)", message: error.description, preferredStyle: .Alert)
+    let alert = UIAlertController(title: "\(error.code)", message: error.domain, preferredStyle: .Alert)
     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: handler))
     vc.presentViewController(alert, animated: animated, completion: nil)
 }
