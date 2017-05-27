@@ -13,7 +13,7 @@ extension String {
         
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
-            let transform = CGAffineTransformMakeScale(3, 3)
+            let transform = CGAffineTransformMakeScale(5, 5)
             
             if let output = filter.outputImage?.imageByApplyingTransform(transform) {
                 return UIImage(CIImage: output)
