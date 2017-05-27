@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import LocalAuthentication
 
 
 //Extensions
@@ -21,6 +22,40 @@ extension String {
         }
         
         return nil
+    }
+    func stringUsingEncoding(encoding: NSStringEncoding)->String{
+    var data = self.dataUsingEncoding(encoding)
+        return (NSString(data: data!, encoding: encoding)) as! String
+    }
+}
+
+extension String {
+    func URLEncodedString() -> String? {
+        var escapedString = self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())
+        return escapedString
+    }
+    static func queryStringFromParameters(parameters: Dictionary<String,String>) -> String? {
+        if (parameters.count == 0)
+        {
+            return nil
+        }
+        var queryString : String? = nil
+        for (key, value) in parameters {
+            if let encodedKey = key.URLEncodedString() {
+                if let encodedValue = value.URLEncodedString() {
+                    if queryString == nil
+                    {
+                        queryString = "?"
+                    }
+                    else
+                    {
+                        queryString! += "&"
+                    }
+                    queryString! += encodedKey + "=" + encodedValue
+                }
+            }
+        }
+        return queryString
     }
 }
 
