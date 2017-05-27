@@ -140,7 +140,7 @@ extension NSURL {
         
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
-            let transform = CGAffineTransform(a: 0, b: 0, c: 0, d: 0, tx: 3, ty: 3)
+            let transform = CGAffineTransformMakeScale(5, 5)
             
             if let output = filter.outputImage?.imageByApplyingTransform(transform) {
                 return UIImage(CIImage: output)
