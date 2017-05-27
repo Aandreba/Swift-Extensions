@@ -122,16 +122,19 @@ extension NSData {
     }
 }
 
+private func UIImageToCIImage(image: UIImage)->CIImage {
+    return CIImage(image: image)!
+}
+
 extension UIImage {
     var qrString: String? {
-        var image = self.CIImage
+        var image = UIImageToCIImage(self)
         let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyLow])
         
         var decode = ""
-        let features = detector.featuresInImage(image!)
+        let features = detector.featuresInImage(image)
         for feature in features as! [CIQRCodeFeature] {
             decode = feature.messageString
-            print("1")
         }
         return decode
     }
