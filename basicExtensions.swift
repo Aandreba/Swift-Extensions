@@ -130,26 +130,77 @@ extension NSMutableDictionary {
     }
 }
 
+extension CIImage {
+    var cgimage:CGImage!{
+        let context:CIContext? = CIContext(options: nil)
+        if context != nil {
+            return context!.createCGImage(self, fromRect: self.extent)
+        }
+        return nil
+    }
+    var uiimage:UIImage{
+        var ui = UIImage(CGImage: self.cgimage)
+        return ui
+    }
+    
+    var data:NSData{
+        var cg = self.cgimage
+        print(cg)
+        return UIImagePNGRepresentation(cg.uiimage)!
+    }
+}
+
+extension CGImage {
+    var data:NSData{
+        return UIImagePNGRepresentation(UIImage(CGImage: self))!
+    }
+    var uiimage:UIImage{
+        return UIImage(CGImage: self)
+    }
+
+
 
 extension NSURL {
     func openURL(){
         UIApplication.sharedApplication().openURL(self)
     }
+    func resizeImage(image: UIImage, withQuality quality: CGInterpolationQuality, rate: CGFloat) -> UIImage {
+        let width = image.size.width * rate
+        let height = image.size.height * rate
+        
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), true, 0)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetInterpolationQuality(context, quality)
+        image.drawInRect(CGRectMake(0, 0, width, height))
+        
+        let resized = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return resized;
+    }
+    
     var QRImage:UIImage?{
-        let data = self.dataRepresentation
+        let data = self.absoluteString.dataUsingEncoding(NSUTF8StringEncoding)
         
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
+            filter.setValue("L", forKey: "inputCorrectionLevel")
+            var ret = UIImage()
+            ret = UIImage(CGImage: filter.outputImage!.cgimage)
+            ret.drawInRect(filter.outputImage!.extent)
+            print(filter.outputImage?.data)
             let transform = CGAffineTransformMakeScale(5, 5)
             
             if let output = filter.outputImage?.imageByApplyingTransform(transform) {
-                return UIImage(CIImage: output)
+ 
+                return output.uiimage
             }
         }
         
         return nil
     }
+
 }
+
 
 extension NSData {
     func stringUsingEncoding(encoding: UInt)->String{
