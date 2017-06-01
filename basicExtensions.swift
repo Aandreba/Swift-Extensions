@@ -157,6 +157,7 @@ extension CGImage {
     var uiimage:UIImage{
         return UIImage(CGImage: self)
     }
+    }
 
 
 
