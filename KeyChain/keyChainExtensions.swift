@@ -2,9 +2,12 @@ import Foundation
 import UIKit
 
 extension A0SimpleKeychain {
-    public func setObject(object:AnyObject!, forKey:String!){
-        var data = object.data
-        self.setData(data, forKey: forKey)
+    public func setObject(object:AnyObject!, forKey:String!)-> Bool{
+        if var data = object.dataValue {
+        self.setData(data!, forKey: forKey)
+            return true
+        }
+        return false
     }
     public func setDictionary(object:NSDictionary, forKey:String!){
         var data : NSData = NSKeyedArchiver.archivedDataWithRootObject(object)
