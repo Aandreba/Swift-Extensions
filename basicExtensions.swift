@@ -11,7 +11,7 @@ extension Double {
         return round(self * divisor) / divisor
     }
 }
-extension Double {
+extension Float {
     /// Rounds the double to decimal places value
     func roundToPlaces(places:Int) -> Float {
         let divisor = pow(10.0, Float(places))
