@@ -37,9 +37,27 @@ extension String {
         
         return nil
     }
+    
     func stringUsingEncoding(encoding: NSStringEncoding)->String{
     var data = self.dataUsingEncoding(encoding)
         return (NSString(data: data!, encoding: encoding)) as! String
+    }
+}
+
+extension Int {
+    var BarcodeImage:UIImage?{
+        let data = "\(self)".dataUsingEncoding(NSASCIIStringEncoding)
+        
+        if let filter = CIFilter(name: "CICode128BarcodeGenerator") {
+            filter.setValue(data, forKey: "inputMessage")
+            let transform = CGAffineTransformMakeScale(5, 5)
+            
+            if let output = filter.outputImage?.imageByApplyingTransform(transform) {
+                return UIImage(CIImage: output)
+            }
+        }
+        
+        return nil
     }
 }
 
